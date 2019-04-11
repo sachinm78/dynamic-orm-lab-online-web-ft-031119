@@ -48,14 +48,21 @@ class InteractiveRecord
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM #{table_name_for_insert}")[0][0]
   end
 
-   def self.find_by_name(name)
+  def self.find_by_name(name)
     sql = "SELECT * FROM #{self.table_name} WHERE name = '#{name}'"
     DB[:conn].execute(sql)
-end
+  end
 
-   def self.find_by(hash)
-    sql = "SELECT * FROM #{self.table_name} WHERE #{hash.keys[0].to_s} = '#{hash.values[0].to_s}'"
-    DB[:conn].execute(sql)
+  def self.find_by(attribute)
+    column_name = attribute.keys[0].to_s
+    value_name = attribute.values[0]
+
+    sql = <<-SQL
+      SELECT * FROM #{table_name}
+      WHERE #{column_name} = ?
+      SQL
+
+    DB[:conn].execute(sql, value_name);
   end
  
 end
