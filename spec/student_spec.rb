@@ -122,3 +122,5 @@ describe Student do
       # expect(Student.find_by({grade: 10})).to eq([{"id"=>1, "name"=>"Susan", "grade"=>10, 0=>1, 1=>"Susan", 2=>10}])
     end
   end
+end
+end
